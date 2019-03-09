@@ -1,2 +1,5 @@
-# BlockChain
-A C# BlockChain client | Opens up a port to accept connects from the BlockChain Miner
+# BlockChain Miner
+A C# BlockChain client 
+
+
+Connects to a BlockChain (server) as a client
