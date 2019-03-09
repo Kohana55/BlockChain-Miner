@@ -26,15 +26,22 @@ namespace BlockChain.Models
         public Main()
         {
             lewCoins = new BlockChainObj();
-
+            client = new P2PClient(1007);
+            client.OnMessageReceived += Client_OnMessageReceived;
             try
             {
-                client = new P2PClient(1000);
+                Task.Run(() => client.Start());
             }
             catch(Exception ex)
             {
 
             }
+        }
+
+        private void Client_OnMessageReceived()
+        {
+            // TEST CODE - Client connected to server and recived a message, send one back
+            client.Send("Hello to you to");
         }
     }
 }
