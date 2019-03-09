@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlockChain.Models.Networking;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -11,6 +12,7 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public List<Block> chain;
         public string nugget;
+        public P2PClient client;
 
         /// <summary>
         /// 
@@ -21,8 +23,10 @@ namespace BlockChain.Models.BlockChain
         /// Block Chain constructor
         /// Both creates the chain and the genesis block
         /// </summary>
-        public BlockChainObj()
+        public BlockChainObj(P2PClient client)
         {
+            this.client = client;
+            client.OnMessageReceived += MessageReceivedFromClient;
             chain = new List<Block>();
             chain.Add(CreateGenesisBlock());
         }
@@ -67,6 +71,13 @@ namespace BlockChain.Models.BlockChain
             currentBlock.MineHash(nugget);
             hashTimer.Stop();
             chain.Add(currentBlock);    
+        }
+
+        private void MessageReceivedFromClient()
+        {
+            // If it's a block, check it and add it
+            
+            // If it's a transaction, check it and add it
         }
 
         public delegate void OnStatusUpdateEventHandler(object sender, string e);

@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace BlockChain.Models.Networking
 {
-    class P2PClient
+    public class P2PClient
     {
 
         TcpClient client;
