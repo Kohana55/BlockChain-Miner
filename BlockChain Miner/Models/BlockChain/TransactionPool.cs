@@ -9,7 +9,7 @@ namespace BlockChain.Models.BlockChain
     public class TransactionPool
     {
 
-        List<Transaction> transactionsList = new List<Transaction>();
+        public List<Transaction> pendingTransactions = new List<Transaction>();
 
 
         public TransactionPool()
@@ -19,7 +19,7 @@ namespace BlockChain.Models.BlockChain
         public void AddTransaction(Transaction transaction)
         {
             // Check before adding
-            transactionsList.Add(transaction);
+            pendingTransactions.Add(transaction);
         }
 
         public void DeleteTransaction(Transaction transaction)

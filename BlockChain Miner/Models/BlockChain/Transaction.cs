@@ -60,7 +60,7 @@ namespace BlockChain.Models.BlockChain
         /// <returns></returns>
         public string Serialise()
         {
-            return $"TRANSACTION:{sender},{receiver},{amount},{dateTime},{transactionHash}" + 0;
+            return $"T:{sender}-{receiver}-{amount}-{dateTime}";
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace BlockChain.Models.BlockChain
         public void Deserialise(string data)
         {
             string trimmedData = data.Substring(data.IndexOf(':')+1);
-            string[] messageTokens = trimmedData.Split(',');
+            string[] messageTokens = trimmedData.Split('-');
 
             sender = messageTokens[0];
             receiver = messageTokens[1];
@@ -80,12 +80,8 @@ namespace BlockChain.Models.BlockChain
             string[] dateTimeTokens = messageTokens[3].Split(' ');
             string[] dateTokens = dateTimeTokens[0].Split('/');
             string[] timeTokens = dateTimeTokens[1].Split(':');
-
             dateTime = new DateTime(int.Parse(dateTokens[2]), int.Parse(dateTokens[1]), int.Parse(dateTokens[0]), 
                                     int.Parse(timeTokens[0]), int.Parse(timeTokens[1]), int.Parse(timeTokens[2]));
-
-
-            transactionHash = messageTokens[4];
         }
     }
 }

@@ -31,7 +31,7 @@ namespace BlockChain.Models.Networking
 
         public void StartReceiving()
         {
-            Byte[] buffer = new Byte[256];
+            Byte[] buffer = new Byte[4000];
             while (client.Connected)
             {
                 int bytesRead;
@@ -54,7 +54,7 @@ namespace BlockChain.Models.Networking
         /// </summary>
         public void Send(string data)
         {
-            Byte[] buffer = new Byte[256];
+            Byte[] buffer = new Byte[data.Length];
             buffer = System.Text.Encoding.ASCII.GetBytes(data);
             client.GetStream().Write(buffer, 0, buffer.Length);
         }

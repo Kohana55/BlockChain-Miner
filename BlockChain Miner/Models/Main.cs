@@ -13,8 +13,9 @@ namespace BlockChain.Models
         /// <summary>
         /// Lew Coins!!!! 
         /// </summary>
-        public BlockChainObj lewCoins;
-        P2PClient client;
+        public Miner lewCoins;
+        public P2PClient client;
+        public Miner miner;
 
 
         /// <summary>
@@ -26,12 +27,14 @@ namespace BlockChain.Models
         public Main()
         {
             
-            client = new P2PClient(1028);
-            lewCoins = new BlockChainObj(client);
+            client = new P2PClient(1005);
+            miner = new Miner(client);
+            lewCoins = new Miner(client);
 
             try
             {
                 Task.Run(() => client.Start());
+                Task.Run(() => miner.Start());
             }
             catch(Exception ex)
             {

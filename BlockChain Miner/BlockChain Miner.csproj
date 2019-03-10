@@ -82,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BlockChain\Block.cs" />
-    <Compile Include="Models\BlockChain\BlockChainObj.cs" />
+    <Compile Include="Models\BlockChain\Miner.cs" />
     <Compile Include="Models\Main.cs" />
     <Compile Include="Models\Networking\P2PClient.cs" />
     <Compile Include="Models\Utility\BindableBase.cs" />

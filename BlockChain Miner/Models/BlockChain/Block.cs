@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -26,6 +27,7 @@ namespace BlockChain.Models.BlockChain
         public string hash;
         public int nonce;
         public string data;
+        public List<Transaction> transactions;
 
         /// <summary>
         /// Create a block using the date and the data
@@ -34,14 +36,15 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="dataArg"></param>
-        public Block(DateTime dt, string dataArg)
+        public Block(DateTime dt, string dataArg, List<Transaction> transactions)
         {
             index = 0;
             date = dt;
             previousHash = null;
             hash = null;
             nonce = 0;
-            data = dataArg;        
+            data = dataArg;
+            this.transactions = transactions;
         }
 
         /// <summary>
@@ -71,6 +74,8 @@ namespace BlockChain.Models.BlockChain
             if (nugget == null)
                 nugget = "Lew";
 
+            BuildDataString();
+
             // Mine for Hash
             bool hashMined = false;
             while (hashMined == false)
@@ -86,5 +91,29 @@ namespace BlockChain.Models.BlockChain
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void BuildDataString()
+        {
+            // Build Data string to be hashed
+            for (int i = 0; i < transactions.Count; i++)
+            {
+                data = string.Concat(data, transactions[0].Serialise());
+
+                if (!(i == transactions.Count - 1)) { data = string.Concat(data, "|"); }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string Serialise()
+        {
+            return $"B:{index},{date},{previousHash},{hash},{nonce},{data}";
+        }
     }
 }
