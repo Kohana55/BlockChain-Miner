@@ -8,7 +8,7 @@ namespace BlockChain.Models.Networking
     public class P2PClient
     {
 
-        TcpClient client;
+        public TcpClient client;
         int port;
 
         public P2PClient(int port)
