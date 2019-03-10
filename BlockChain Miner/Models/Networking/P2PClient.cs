@@ -11,14 +11,20 @@ namespace BlockChain.Models.Networking
         public TcpClient client;
         int port;
 
+        public P2PClient()
+        { }
+
         public P2PClient(int port)
         {
             this.port = port;
-            client = new TcpClient();
         }
+
 
         public void Start()
         {
+            if (client == null)
+                client = new TcpClient();
+
             client.Connect(IPAddress.Loopback, port);
             StartReceiving();
         }
@@ -38,7 +44,7 @@ namespace BlockChain.Models.Networking
 
 
                     // Let calling programme know a message was received
-                    OnMessageReceived?.Invoke();
+                    OnMessageReceived?.Invoke(data);
                 }
             }
         }
@@ -53,7 +59,7 @@ namespace BlockChain.Models.Networking
             client.GetStream().Write(buffer, 0, buffer.Length);
         }
 
-        public delegate void MessageReceivedEventHandler();
+        public delegate void MessageReceivedEventHandler(string message);
         public event MessageReceivedEventHandler OnMessageReceived;
     }
 }

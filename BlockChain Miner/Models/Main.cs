@@ -26,7 +26,7 @@ namespace BlockChain.Models
         public Main()
         {
             
-            client = new P2PClient(1017);
+            client = new P2PClient(1028);
             lewCoins = new BlockChainObj(client);
 
             try

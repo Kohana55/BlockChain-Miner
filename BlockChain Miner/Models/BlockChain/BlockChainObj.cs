@@ -12,7 +12,10 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public List<Block> chain;
         public string nugget;
+        public TransactionPool transactionPool;
         public P2PClient client;
+
+
 
         /// <summary>
         /// 
@@ -28,6 +31,7 @@ namespace BlockChain.Models.BlockChain
             this.client = client;
             client.OnMessageReceived += MessageReceivedFromClient;
             chain = new List<Block>();
+            transactionPool = new TransactionPool();
             chain.Add(CreateGenesisBlock());
         }
 
@@ -73,11 +77,36 @@ namespace BlockChain.Models.BlockChain
             chain.Add(currentBlock);    
         }
 
-        private void MessageReceivedFromClient()
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transaction"></param>
+        public void ProcessTransaction(Transaction transaction)
         {
-            // If it's a block, check it and add it
-            
-            // If it's a transaction, check it and add it
+            transaction.RunHash();
+            transactionPool.AddTransaction(transaction);
+
+            // send on network
+            if (client != null)
+                client.Send(transaction.Serialise());
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        private void MessageReceivedFromClient(string message)
+        {
+            if (message.Substring(0, "TRANSACTION".Length) == "TRANSACTION")
+            {
+                transactionPool.AddTransaction(new Transaction(message));
+            }
+            else // is BLOCK
+            {
+
+            }
         }
 
         public delegate void OnStatusUpdateEventHandler(object sender, string e);
