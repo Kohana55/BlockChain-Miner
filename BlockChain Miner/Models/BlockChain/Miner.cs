@@ -17,6 +17,8 @@ namespace BlockChain.Models.BlockChain
         public P2PClient client;
         public string currentHash;
         public int currentIndex;
+        public Block candidateBlock = null;
+
 
         /// <summary>
         /// 
@@ -58,7 +60,7 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public void MineBlock()
         {
-            Block candidateBlock = new Block(DateTime.Now, "", transactionPool.pendingTransactions);
+            candidateBlock = new Block(DateTime.Now, "", transactionPool.pendingTransactions);
             candidateBlock.previousHash = currentHash;
             candidateBlock.index = currentIndex;
 
@@ -75,17 +77,40 @@ namespace BlockChain.Models.BlockChain
         /// <param name="message"></param>
         private void MessageReceivedFromClient(string message)
         {
+
+            // Upgrade into a switch statement based off the first 2 characters
+
             if (message.Substring(0, "T:".Length) == "T:")
             {
-                transactionPool.AddTransaction(new Transaction(message));
+                ProcessTransaction(message);
             }
             else if (message.Substring(0, "U:".Length) == "U:")
             {
-                UpdateHashAndIndex(message.Substring(message.IndexOf(':') + 1));
+                ProcessUpdate(message.Substring(message.IndexOf(':') + 1));
+            }
+            else if (message.Substring(0, "M:".Length) == "M:")
+            {
+                ProcessMessage(message);
             }
         }
 
-        private void UpdateHashAndIndex(string update)
+        private void ProcessMessage(string message)
+        {
+            string trimmedMessage = message.Substring(message.IndexOf(':') + 1);
+
+            if (message == "BlockAccepted")
+            {
+                // Remove transaction in candidate block from pool and null candidate block
+
+            }
+        }
+
+        private void ProcessTransaction(string message)
+        {
+            transactionPool.AddTransaction(new Transaction(message));
+        }
+
+        private void ProcessUpdate(string update)
         {
             string[] tokens = update.Split(',');
             currentHash = tokens[0];

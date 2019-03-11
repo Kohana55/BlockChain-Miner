@@ -11,9 +11,10 @@ namespace BlockChain.Models
     public class Main
     {
         /// <summary>
-        /// Lew Coins!!!! 
+        /// Client and Miner
+        /// The Miner uses the client. 
+        /// Both should run in their own threads
         /// </summary>
-        public Miner lewCoins;
         public P2PClient client;
         public Miner miner;
 
@@ -25,11 +26,9 @@ namespace BlockChain.Models
         /// ...whatever you kids are calling it these days)
         /// </summary>
         public Main()
-        {
-            
-            client = new P2PClient(1005);
+        {          
+            client = new P2PClient(1002);
             miner = new Miner(client);
-            lewCoins = new Miner(client);
 
             try
             {

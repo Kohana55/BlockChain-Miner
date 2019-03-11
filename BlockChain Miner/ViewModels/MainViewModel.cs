@@ -13,8 +13,40 @@ namespace BlockChain_Miner.ViewModels
 
         Main main = new Main();
 
+        public int NumberOfTransactions
+        {
+            get { return numberOfTransactions; }
+            set { SetProperty(ref numberOfTransactions, value); }
+        }
+        private int numberOfTransactions;
 
+        public string BlocksSuggestedAccepted
+        {
+            get { return blocksSuggested; }
+            set { SetProperty(ref blocksSuggested, value); }
+        }
+        private string blocksSuggested;
 
+        public string PreviousHash
+        {
+            get { return previousHash; }
+            set { SetProperty(ref previousHash, value); }
+        }
+        private string previousHash;
+
+        public int PreviousIndex
+        {
+            get { return previousIndex; }
+            set { SetProperty(ref previousIndex, value); }
+        }
+        private int previousIndex;
+
+        public string NetworkStatus
+        {
+            get { return networkStatus; }
+            set { SetProperty(ref networkStatus, value); }
+        }
+        private string networkStatus;
 
         public MainViewModel()
         {
