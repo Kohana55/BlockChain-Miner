@@ -48,6 +48,7 @@ namespace BlockChain.Models.BlockChain
                 if (transactionPool.pendingTransactions.Count >= 2)
                 {
                     MineBlock();
+                    transactionPool.ProcessCandidateBlock(candidateBlock);
                 }
 
                 Thread.Sleep(50);

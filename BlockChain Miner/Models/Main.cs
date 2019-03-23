@@ -27,7 +27,7 @@ namespace BlockChain.Models
         /// </summary>
         public Main()
         {          
-            client = new P2PClient(1002);
+            client = new P2PClient(1043);
             miner = new Miner(client);
 
             try
